@@ -1,8 +1,16 @@
 package com.example.taller1.domain;
 
 import java.time.LocalDateTime;
+import java.util.Collection;
+import java.util.List;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -14,25 +22,85 @@ import lombok.Setter;
 @Table(name = "usuarios")
 @Getter
 @Setter
-public class Usuario {
+public class Usuario implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String nombre;
+    private String nombre1;
+    private String nombre2;
+    private String apellido1;
+    private String apellido2;
     private String email;
     private String contraseña;
-    private String rol;
+    
+    @Enumerated(EnumType.STRING)
+    private Role rol;
+    
     private LocalDateTime fechaRegistro = LocalDateTime.now();
+    private boolean accountNonExpired = true;
+    private boolean accountNonLocked = true;
+    private boolean credentialsNonExpired = true;
+    private boolean enabled = true;
 
     
-    public Usuario(Long id, String nombre, String email, String contraseña, String rol, LocalDateTime fechaRegistro) {
+    public Usuario(Long id, String nombre1, String nombre2, String apellido1, String apellido2, 
+                  String email, String contraseña, Role rol, LocalDateTime fechaRegistro) {
         this.id = id;
-        this.nombre = nombre;
+        this.nombre1 = nombre1;
+        this.nombre2 = nombre2;
+        this.apellido1 = apellido1;
+        this.apellido2 = apellido2;
         this.email = email;
         this.contraseña = contraseña;
         this.rol = rol;
         this.fechaRegistro = fechaRegistro;
     }
 
+    public Usuario() {
+    }
     
+    public Usuario(String nombre1, String contraseña) {
+        this.nombre1 = nombre1;
+        this.contraseña = contraseña;
+    }
+
+    public String getNombreCompleto() {
+        return nombre1 + " " + nombre2 + " " + apellido1 + " " + apellido2;
+    }
+    
+    @Override
+    public String getUsername() {
+        // Using email as the unique username for authentication
+        return email;
+    }
+
+    @Override
+    public String getPassword() {
+        return contraseña;
+    }
+    
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority("ROLE_" + rol.name()));
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return accountNonExpired;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return accountNonLocked;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return credentialsNonExpired;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return enabled;
+    }
 }
