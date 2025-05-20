@@ -1,6 +1,5 @@
 package com.example.taller1.domain;
 
-import java.sql.Date;
 import java.time.LocalDateTime;
 
 import jakarta.persistence.Entity;
@@ -31,10 +30,10 @@ public class Reserva {
     private Herramienta herramienta;
     
     private LocalDateTime fechaInicio = LocalDateTime.now();
-    private Date fechaFin;
-    private String estado = "PENDIENTE";
+    private LocalDateTime fechaFin = LocalDateTime.now();
+    private String estado = "pendiente";
     
-    public Reserva(Long id, Usuario cliente, Herramienta herramienta, LocalDateTime fechaInicio, Date fechaFin,
+    public Reserva(Long id, Usuario cliente, Herramienta herramienta, LocalDateTime fechaInicio, LocalDateTime fechaFin,
             String estado) {
         this.id = id;
         this.cliente = cliente;
@@ -43,6 +42,5 @@ public class Reserva {
         this.fechaFin = fechaFin;
         this.estado = estado;
     }
-
-    
+    public Reserva(){};
 }

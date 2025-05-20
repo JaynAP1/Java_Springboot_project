@@ -34,5 +34,5 @@ public class Usuario {
         this.fechaRegistro = fechaRegistro;
     }
 
-    
+    public Usuario() {}
 }
