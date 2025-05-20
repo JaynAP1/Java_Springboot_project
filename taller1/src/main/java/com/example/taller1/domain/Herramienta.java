@@ -42,5 +42,5 @@ public class Herramienta {
         this.imagenUrl = imagenUrl;
     }
 
-    
+    public Herramienta() {}
 }
