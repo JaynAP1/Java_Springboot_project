@@ -19,20 +19,30 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nombre;
+    private String apellido1;
+    private String apellido2;
     private String email;
     private String contraseña;
     private String rol;
     private LocalDateTime fechaRegistro = LocalDateTime.now();
-
     
-    public Usuario(Long id, String nombre, String email, String contraseña, String rol, LocalDateTime fechaRegistro) {
+    public Usuario() {
+    }
+
+    public Usuario(Long id, String nombre, String apellido1, String apellido2, String email, String contraseña,
+            String rol, LocalDateTime fechaRegistro) {
         this.id = id;
         this.nombre = nombre;
+        this.apellido1 = apellido1;
+        this.apellido2 = apellido2;
         this.email = email;
         this.contraseña = contraseña;
         this.rol = rol;
         this.fechaRegistro = fechaRegistro;
     }
 
-    public Usuario() {}
+    
+   
+
+    
 }

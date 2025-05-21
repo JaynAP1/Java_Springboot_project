@@ -22,18 +22,24 @@ public class Herramienta {
     @ManyToOne
     @JoinColumn(name = "proveedor_id")
     private Usuario proveedor;
-
+    private long cantidad;
     private String nombre;
     private String descripcion;
     private String categoria;
     private long precioDiario;
     private boolean disponible = true;
     private String imagenUrl;
-    
-    public Herramienta(Long id, Usuario proveedor, String nombre, String descripcion, String categoria,
+
+    public Herramienta() {
+       
+    }
+
+
+    public Herramienta(Long id, Usuario proveedor,long cantidad, String nombre, String descripcion, String categoria,
             long precioDiario, boolean disponible, String imagenUrl) {
         this.id = id;
         this.proveedor = proveedor;
+        this.cantidad= cantidad;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.categoria = categoria;
@@ -42,5 +48,5 @@ public class Herramienta {
         this.imagenUrl = imagenUrl;
     }
 
-    public Herramienta() {}
+    
 }
