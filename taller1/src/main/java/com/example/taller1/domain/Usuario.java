@@ -26,12 +26,8 @@ public class Usuario implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-<<<<<<< HEAD
-    private String nombre;
-=======
     private String nombre1;
     private String nombre2;
->>>>>>> Feature-Login-register-funcionality
     private String apellido1;
     private String apellido2;
     private String email;
@@ -41,16 +37,6 @@ public class Usuario implements UserDetails {
     private Role rol;
     
     private LocalDateTime fechaRegistro = LocalDateTime.now();
-<<<<<<< HEAD
-    
-    public Usuario() {
-    }
-
-    public Usuario(Long id, String nombre, String apellido1, String apellido2, String email, String contraseña,
-            String rol, LocalDateTime fechaRegistro) {
-        this.id = id;
-        this.nombre = nombre;
-=======
     private boolean accountNonExpired = true;
     private boolean accountNonLocked = true;
     private boolean credentialsNonExpired = true;
@@ -62,7 +48,6 @@ public class Usuario implements UserDetails {
         this.id = id;
         this.nombre1 = nombre1;
         this.nombre2 = nombre2;
->>>>>>> Feature-Login-register-funcionality
         this.apellido1 = apellido1;
         this.apellido2 = apellido2;
         this.email = email;
@@ -74,12 +59,6 @@ public class Usuario implements UserDetails {
     public Usuario() {
     }
     
-<<<<<<< HEAD
-   
-
-    
-}
-=======
     public Usuario(String nombre1, String contraseña) {
         this.nombre1 = nombre1;
         this.contraseña = contraseña;
@@ -125,4 +104,3 @@ public class Usuario implements UserDetails {
         return enabled;
     }
 }
->>>>>>> Feature-Login-register-funcionality
