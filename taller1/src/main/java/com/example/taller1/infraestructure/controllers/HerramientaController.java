@@ -22,7 +22,7 @@ import com.example.taller1.infraestructure.repositorys.Herramientas.HerramientaS
 
 @RestController
 @RequestMapping("/api/herramientas")
-@CrossOrigin(origins = "http://localhost:5174")
+@CrossOrigin(origins = "http://localhost:5173")
 public class HerramientaController {
 
     private final HerramientaService herramientaService;

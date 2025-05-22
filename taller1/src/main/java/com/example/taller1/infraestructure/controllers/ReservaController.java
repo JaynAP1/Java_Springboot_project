@@ -1,4 +1,5 @@
 package com.example.taller1.infraestructure.controllers;
+
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,10 +17,9 @@ import com.example.taller1.infraestructure.repositorys.Reserva.ReservaService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 
-
 @RestController
 @RequestMapping(value = "/reservas", produces = MediaType.APPLICATION_JSON_VALUE)
-@CrossOrigin(origins = "http://localhost:5174")
+@CrossOrigin(origins = "http://localhost:5173")
 public class ReservaController {
 
     private final ReservaService reservaService;
@@ -29,35 +29,36 @@ public class ReservaController {
     }
 
     @GetMapping("/id_reserva/")
-    public Reserva obtenerReservaPorId(@RequestParam int id){
+    public Reserva obtenerReservaPorId(@RequestParam int id) {
         return reservaService.obtenerReservaPorId(id);
     }
 
     @PostMapping("/")
     public List<Reserva> listaReservas(@RequestParam(required = false) String fechaInicio,
-                                    @RequestParam(required = false) String fechaFin,
-                                    @RequestParam(required = false) String estado) {
-        List<Reserva> results= reservaService.listarReservas(fechaFin,
-                                                            fechaInicio,
-                                                            estado);
+            @RequestParam(required = false) String fechaFin,
+            @RequestParam(required = false) String estado) {
+        List<Reserva> results = reservaService.listarReservas(fechaFin,
+                fechaInicio,
+                estado);
         return results;
     }
+
     @PostMapping("/crear")
     public Reserva crearReserva(@RequestParam Long usuarioId,
-                                @RequestParam Long herramientaId,
-                                @RequestParam String fechaInicio,
-                                @RequestParam String fechaFin) {
+            @RequestParam Long herramientaId,
+            @RequestParam String fechaInicio,
+            @RequestParam String fechaFin) {
         LocalDateTime fecha = LocalDateTime.parse(fechaInicio, DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss"));
         LocalDateTime fechaF = LocalDateTime.parse(fechaInicio, DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss"));
-        return reservaService.agregarReserva(usuarioId, herramientaId,fecha,fechaF);
+        return reservaService.agregarReserva(usuarioId, herramientaId, fecha, fechaF);
     }
 
     @PutMapping("/actualizar")
     public Reserva actualizarReserva(@RequestParam Long reservaId,
-                                    @RequestParam String fechaFin,
-                                    @RequestParam String estado) {
+            @RequestParam String fechaFin,
+            @RequestParam String estado) {
         LocalDateTime fecha = LocalDateTime.parse(fechaFin, DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss"));
-        return reservaService.actualizarReserva(reservaId, fecha,estado);
+        return reservaService.actualizarReserva(reservaId, fecha, estado);
     }
-    
+
 }

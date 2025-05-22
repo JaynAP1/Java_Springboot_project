@@ -10,7 +10,7 @@ import com.example.taller1.domain.Herramienta;
 import com.example.taller1.domain.Reserva;
 import com.example.taller1.domain.Usuario;
 import com.example.taller1.infraestructure.repositorys.Herramientas.HerramientaRepository;
-import com.example.taller1.infraestructure.repositorys.Usuario.UsuarioRepository;
+import com.example.taller1.infraestructure.repositorys.users.UsuarioRepository;
 @Service
 public class ReservaService {
     private final ReservaRepository reservaRepository;
@@ -77,7 +77,7 @@ public class ReservaService {
         } 
     }
 
-     public Reserva obtenerReservaPorId(int id){
+    public Reserva obtenerReservaPorId(int id){
         return reservaRepository.findById(id);
 
     }
