@@ -44,7 +44,7 @@ public class HerramientaService {
         h.setImagenUrl(datos.getImagenUrl());
         h.setDisponible(datos.isDisponible());
 
-        // Si quieres cambiar proveedor también, verifica y asigna:
+        // para cambiar proveedor también, verifica y asigna:
         if (datos.getProveedor() != null) {
             h.setProveedor(datos.getProveedor());
         }
