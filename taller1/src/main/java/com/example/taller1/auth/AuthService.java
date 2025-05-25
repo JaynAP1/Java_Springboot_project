@@ -32,7 +32,7 @@ public class AuthService {
         // Create new user
         Usuario usuario = new Usuario();
         usuario.setEmail(request.getEmail());
-        usuario.setContraseña(passwordEncoder.encode(request.getPassword()));
+        usuario.setContrasena(passwordEncoder.encode(request.getPassword()));
         usuario.setNombre1(request.getNombre1());
         usuario.setApellido1(request.getApellido1());
         usuario.setRol(Role.USER); // Default role

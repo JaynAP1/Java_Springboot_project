@@ -10,7 +10,7 @@ import com.example.taller1.domain.Herramienta;
 import com.example.taller1.domain.Reserva;
 import com.example.taller1.domain.Usuario;
 import com.example.taller1.infraestructure.repositorys.Herramientas.HerramientaRepository;
-import com.example.taller1.infraestructure.repositorys.Usuario.UsuarioRepository;
+import com.example.taller1.infraestructure.repositorys.users.UsuarioRepository;
 @Service
 public class ReservaService {
     private final ReservaRepository reservaRepository;
@@ -27,7 +27,7 @@ public class ReservaService {
         this.herramientaRepository = herramientaRepository;
     }
 
-    public Reserva agregarReserva(Long usuarioId, Long herramientaId,LocalDateTime fechaInicio,LocalDateTime fechaFin) {
+    public Reserva agregarReserva(Long usuarioId, Long herramientaId,LocalDateTime fechaInicio,LocalDateTime fechaFin, Integer cantidad) {
         Usuario usuario = usuarioRepository.findById(usuarioId)
             .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
@@ -39,15 +39,17 @@ public class ReservaService {
         reserva.setHerramienta(herramienta);
         reserva.setFechaInicio(fechaInicio);
         reserva.setFechaFin(fechaFin);
+        reserva.setCantdiad(cantidad);
         return reservaRepository.save(reserva);
     }
 
-    public Reserva actualizarReserva(Long reservaId, LocalDateTime fechaFin,String estado) {
+    public Reserva actualizarReserva(Long reservaId, LocalDateTime fechaFin,String estado, Integer cantidad) {
         Reserva reserva = reservaRepository.findById(reservaId)
             .orElseThrow(() -> new RuntimeException("Reserva no encontrada"));
 
         reserva.setEstado(estado);
         reserva.setFechaFin(fechaFin);
+        reserva.setCantdiad(cantidad);
 
         return reservaRepository.save(reserva);
     }
@@ -77,7 +79,7 @@ public class ReservaService {
         } 
     }
 
-     public Reserva obtenerReservaPorId(int id){
+    public Reserva obtenerReservaPorId(int id){
         return reservaRepository.findById(id);
 
     }

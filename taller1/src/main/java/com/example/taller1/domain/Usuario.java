@@ -31,7 +31,7 @@ public class Usuario implements UserDetails {
     private String apellido1;
     private String apellido2;
     private String email;
-    private String contraseña;
+    private String contrasena;
     
     @Enumerated(EnumType.STRING)
     private Role rol;
@@ -44,14 +44,14 @@ public class Usuario implements UserDetails {
 
     
     public Usuario(Long id, String nombre1, String nombre2, String apellido1, String apellido2, 
-                  String email, String contraseña, Role rol, LocalDateTime fechaRegistro) {
+                  String email, String contrasena, Role rol, LocalDateTime fechaRegistro) {
         this.id = id;
         this.nombre1 = nombre1;
         this.nombre2 = nombre2;
         this.apellido1 = apellido1;
         this.apellido2 = apellido2;
         this.email = email;
-        this.contraseña = contraseña;
+        this.contrasena = contrasena;
         this.rol = rol;
         this.fechaRegistro = fechaRegistro;
     }
@@ -59,9 +59,9 @@ public class Usuario implements UserDetails {
     public Usuario() {
     }
     
-    public Usuario(String nombre1, String contraseña) {
+    public Usuario(String nombre1, String contrasena) {
         this.nombre1 = nombre1;
-        this.contraseña = contraseña;
+        this.contrasena = contrasena;
     }
 
     public String getNombreCompleto() {
@@ -76,7 +76,7 @@ public class Usuario implements UserDetails {
 
     @Override
     public String getPassword() {
-        return contraseña;
+        return contrasena;
     }
     
     @Override
