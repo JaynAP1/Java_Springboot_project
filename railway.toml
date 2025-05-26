@@ -7,7 +7,5 @@ healthcheckPath = "/auth/login"
 healthcheckTimeout = 300
 
 [env]
-JAVA_OPTS = "-XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0"
 ALLOWED_ORIGINS = "*"
-JAVA_TOOL_OPTIONS = "-Xmx512m"
 
