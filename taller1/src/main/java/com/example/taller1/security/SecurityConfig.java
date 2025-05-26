@@ -37,7 +37,12 @@ public class SecurityConfig {
             .cors(cors -> cors.configurationSource(corsConfigurationSource()))
             .csrf(AbstractHttpConfigurer::disable)
             .authorizeHttpRequests(auth -> auth
+                    .requestMatchers("/auth/login").permitAll() // Explicitly permit login endpoint first
+                    .requestMatchers(org.springframework.http.HttpMethod.OPTIONS, "/auth/login").permitAll() // Explicitly permit OPTIONS for login
                     .requestMatchers("/auth/**").permitAll()
+                    .requestMatchers("/usuarios/exists/**").permitAll()
+                    .requestMatchers("/usuarios/save-info").permitAll()
+                    .requestMatchers("/save-info").permitAll()
                     .anyRequest().authenticated()
             )
             .sessionManagement(session -> session
@@ -52,10 +57,12 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        // Keep existing allowed origins
+        // Allow requests from the frontend origin
         configuration.setAllowedOrigins(List.of("http://localhost:5173"));
-        // Keep existing allowed methods
-        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
+        // Include all necessary HTTP methods including OPTIONS for preflight
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH", "HEAD"));
+        // Set allow credentials to true to ensure cookies/auth headers are included
+        configuration.setAllowCredentials(true);
         // Explicitly list important headers including Authorization
         configuration.setAllowedHeaders(Arrays.asList(
             "Authorization", 
@@ -80,6 +87,19 @@ public class SecurityConfig {
         
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
+        
+        // Create a specific configuration for login with maximum permissiveness
+        CorsConfiguration loginConfig = new CorsConfiguration();
+        loginConfig.setAllowedOrigins(List.of("http://localhost:5173"));
+        loginConfig.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH", "HEAD"));
+        loginConfig.setAllowedHeaders(Arrays.asList("*"));
+        loginConfig.setExposedHeaders(Arrays.asList("*"));
+        loginConfig.setAllowCredentials(true);
+        loginConfig.setMaxAge(3600L);
+        
+        // Explicitly register configuration for auth endpoints to ensure proper CORS handling
+        source.registerCorsConfiguration("/auth/login", loginConfig);
+        source.registerCorsConfiguration("/auth/**", configuration);
         return source;
     }
 

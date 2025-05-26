@@ -24,26 +24,21 @@ public class AuthService {
     private final AuthenticationManager authenticationManager;
 
     public AuthResponse register(AuthRequest request) {
-        // Check if user already exists
         if (usuarioRepository.existsByEmail(request.getEmail())) {
             throw new RuntimeException("El email ya está registrado");
         }
 
-        // Create new user
         Usuario usuario = new Usuario();
         usuario.setEmail(request.getEmail());
         usuario.setContrasena(passwordEncoder.encode(request.getPassword()));
         usuario.setNombre1(request.getNombre1());
         usuario.setApellido1(request.getApellido1());
-        usuario.setRol(Role.USER); // Default role
+        usuario.setRol(Role.USER);
 
-        // Save user
         usuarioRepository.save(usuario);
 
-        // Generate token
         String token = jwtService.generateToken(usuario);
 
-        // Return response
         return AuthResponse.builder()
                 .token(token)
                 .email(usuario.getEmail())
@@ -51,7 +46,6 @@ public class AuthService {
     }
 
     public AuthResponse login(LoginRequest request) {
-        // Authenticate user
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getEmail(),
@@ -59,17 +53,18 @@ public class AuthService {
                 )
         );
 
-        // Get user
         Usuario usuario = usuarioRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado"));
 
-        // Generate token
         String token = jwtService.generateToken(usuario);
 
-        // Return response
         return AuthResponse.builder()
                 .token(token)
                 .email(usuario.getEmail())
+                .tipo("Bearer")
+                .nombre1(usuario.getNombre1())
+                .apellido1(usuario.getApellido1())
+                .role(usuario.getRol())
                 .build();
     }
 }
