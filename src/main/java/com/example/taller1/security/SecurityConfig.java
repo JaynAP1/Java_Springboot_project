@@ -43,6 +43,7 @@ public class SecurityConfig {
                     .requestMatchers("/usuarios/exists/**").permitAll()
                     .requestMatchers("/usuarios/save-info").permitAll()
                     .requestMatchers("/save-info").permitAll()
+                    .requestMatchers("/reservas").permitAll()                    
                     .anyRequest().authenticated()
             )
             .sessionManagement(session -> session
