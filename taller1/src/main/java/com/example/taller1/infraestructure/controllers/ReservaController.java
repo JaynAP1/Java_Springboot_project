@@ -63,4 +63,14 @@ public class ReservaController {
         return reservaService.actualizarReserva(reservaId, fecha, estado,cantidad);
     }
 
+    @GetMapping("/usuarioId")
+    public List<Reserva> mostrarReservaPorUsuario(@RequestParam int id){
+        return reservaService.listarPorUsuario(id);
+    };
+
+    @GetMapping("/por_proveedor")
+    public List<Reserva> obtenerReservasPorProveedor(@RequestParam int id) {
+        return reservaService.listarPorProveedor(id);
+    }
+
 }

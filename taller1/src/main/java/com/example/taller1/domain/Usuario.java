@@ -70,6 +70,7 @@ public class Usuario implements UserDetails {
     
     @Override
     public String getUsername() {
+        // Using email as the unique username for authentication
         return email;
     }
 
