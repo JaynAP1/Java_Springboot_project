@@ -1,6 +1,7 @@
 package com.example.taller1.security;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -30,6 +31,9 @@ public class SecurityConfig {
 
     private final JwtAuthenticationFilter jwtAuthFilter;
     private final UserDetailsService userDetailsService;
+    
+    @Value("${allowed.origins:*}")
+    private String allowedOrigins;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -58,8 +62,15 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        // Allow requests from the frontend origin
-        configuration.setAllowedOrigins(List.of("http://localhost:5173"));
+        // Allow requests from configured origins
+        if ("*".equals(allowedOrigins)) {
+            configuration.addAllowedOriginPattern("*"); // Allow all origins with pattern
+        } else {
+            // Split comma-separated origins and add them
+            Arrays.stream(allowedOrigins.split(","))
+                  .map(String::trim)
+                  .forEach(configuration::addAllowedOrigin);
+        }
         // Include all necessary HTTP methods including OPTIONS for preflight
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH", "HEAD"));
         // Set allow credentials to true to ensure cookies/auth headers are included
@@ -91,7 +102,15 @@ public class SecurityConfig {
         
         // Create a specific configuration for login with maximum permissiveness
         CorsConfiguration loginConfig = new CorsConfiguration();
-        loginConfig.setAllowedOrigins(List.of("http://localhost:5173"));
+        // Use the same origin configuration for login
+        if ("*".equals(allowedOrigins)) {
+            loginConfig.addAllowedOriginPattern("*"); // Allow all origins with pattern
+        } else {
+            // Split comma-separated origins and add them
+            Arrays.stream(allowedOrigins.split(","))
+                  .map(String::trim)
+                  .forEach(loginConfig::addAllowedOrigin);
+        }
         loginConfig.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH", "HEAD"));
         loginConfig.setAllowedHeaders(Arrays.asList("*"));
         loginConfig.setExposedHeaders(Arrays.asList("*"));
