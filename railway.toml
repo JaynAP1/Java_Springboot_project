@@ -1,0 +1,20 @@
+[build]
+builder = "nixpacks"
+buildCommand = "./mvnw clean package -DskipTests"
+
+[deploy]
+startCommand = "java -jar target/taller1-0.0.1-SNAPSHOT.jar"
+healthcheckPath = "/actuator/health"
+healthcheckTimeout = 300
+restartPolicyType = "on-failure"
+
+[nixpacks]
+javaVersion = "17"
+
+[env]
+JAVA_OPTS = "-XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0"
+ALLOWED_ORIGINS = "*"
+
+# Railway configures these variables automatically
+# PORT, DATABASE_URL, etc.
+
