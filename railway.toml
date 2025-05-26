@@ -4,9 +4,8 @@ buildCommand = "./mvnw clean package -DskipTests"
 
 [deploy]
 startCommand = "java -jar target/taller1-0.0.1-SNAPSHOT.jar"
-healthcheckPath = "/actuator/health"
+healthcheckPath = "/auth/login"
 healthcheckTimeout = 300
-restartPolicyType = "on-failure"
 
 [nixpacks]
 javaVersion = "17"

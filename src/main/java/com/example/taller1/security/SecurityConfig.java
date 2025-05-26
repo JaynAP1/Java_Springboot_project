@@ -47,7 +47,8 @@ public class SecurityConfig {
                     .requestMatchers("/usuarios/exists/**").permitAll()
                     .requestMatchers("/usuarios/save-info").permitAll()
                     .requestMatchers("/save-info").permitAll()
-                    .requestMatchers("/reservas").permitAll()                    
+                    .requestMatchers("/reservas").permitAll()
+                    .requestMatchers("/actuator/health/**").permitAll() // Permit health checks for Railway
                     .anyRequest().authenticated()
             )
             .sessionManagement(session -> session
