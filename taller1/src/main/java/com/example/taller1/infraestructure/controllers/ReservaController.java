@@ -68,7 +68,7 @@ public class ReservaController {
         return reservaService.listarPorUsuario(id);
     };
 
-        @GetMapping("/por_proveedor")
+    @GetMapping("/por_proveedor")
     public List<Reserva> obtenerReservasPorProveedor(@RequestParam int id) {
         return reservaService.listarPorProveedor(id);
     }

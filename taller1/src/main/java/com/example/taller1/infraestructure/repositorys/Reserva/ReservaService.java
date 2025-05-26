@@ -39,7 +39,7 @@ public class ReservaService {
         reserva.setHerramienta(herramienta);
         reserva.setFechaInicio(fechaInicio);
         reserva.setFechaFin(fechaFin);
-        reserva.setCantdiad(cantidad);
+        reserva.setCantidad(cantidad);
         return reservaRepository.save(reserva);
     }
 
@@ -49,7 +49,7 @@ public class ReservaService {
 
         reserva.setEstado(estado);
         reserva.setFechaFin(fechaFin);
-        reserva.setCantdiad(cantidad);
+        reserva.setCantidad(cantidad);
 
         return reservaRepository.save(reserva);
     }
