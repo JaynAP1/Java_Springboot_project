@@ -28,6 +28,9 @@ public class Devolucion {
     private LocalDateTime fechaDevolucion;
     private String estadoHerramienta;
     private String observaciones;
+
+    public Devolucion() {
+    }
     
     public Devolucion(Long id, Reserva reserva, LocalDateTime fechaDevolucion, String estadoHerramienta,
             String observaciones) {

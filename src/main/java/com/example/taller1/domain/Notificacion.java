@@ -28,6 +28,10 @@ public class Notificacion {
     private String mensaje;
     private boolean leido = false;
     private LocalDateTime fechaCreacion = LocalDateTime.now();
+
+    public Notificacion(){
+        
+    }
     
     public Notificacion(Long id, Usuario usuario, String mensaje, boolean leido, LocalDateTime fechaCreacion) {
         this.id = id;

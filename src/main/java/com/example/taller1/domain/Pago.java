@@ -30,6 +30,11 @@ public class Pago {
     private String metodoPago;
     private String estadoPago = "PENDIENTE";
 
+
+    public Pago(){
+        
+    }
+
     
     public Pago(Long id, Reserva reserva, long monto, LocalDateTime fechaPago, String metodoPago, String estadoPago) {
         this.id = id;

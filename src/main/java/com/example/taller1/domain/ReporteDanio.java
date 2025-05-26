@@ -30,6 +30,11 @@ public class ReporteDanio {
     @Column(length = 500)
     private String descripcion;
 
+
+    public ReporteDanio(){
+        
+    }
+
     public ReporteDanio(Long id, Herramienta herramienta, String estado, String descripcion) {
         this.id = id;
         this.herramienta = herramienta;
