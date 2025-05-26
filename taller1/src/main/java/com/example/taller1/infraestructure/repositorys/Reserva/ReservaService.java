@@ -27,7 +27,7 @@ public class ReservaService {
         this.herramientaRepository = herramientaRepository;
     }
 
-    public Reserva agregarReserva(Long usuarioId, Long herramientaId,LocalDateTime fechaInicio,LocalDateTime fechaFin) {
+    public Reserva agregarReserva(Long usuarioId, Long herramientaId,LocalDateTime fechaInicio,LocalDateTime fechaFin, Integer cantidad) {
         Usuario usuario = usuarioRepository.findById(usuarioId)
             .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
@@ -39,15 +39,17 @@ public class ReservaService {
         reserva.setHerramienta(herramienta);
         reserva.setFechaInicio(fechaInicio);
         reserva.setFechaFin(fechaFin);
+        reserva.setCantdiad(cantidad);
         return reservaRepository.save(reserva);
     }
 
-    public Reserva actualizarReserva(Long reservaId, LocalDateTime fechaFin,String estado) {
+    public Reserva actualizarReserva(Long reservaId, LocalDateTime fechaFin,String estado, Integer cantidad) {
         Reserva reserva = reservaRepository.findById(reservaId)
             .orElseThrow(() -> new RuntimeException("Reserva no encontrada"));
 
         reserva.setEstado(estado);
         reserva.setFechaFin(fechaFin);
+        reserva.setCantdiad(cantidad);
 
         return reservaRepository.save(reserva);
     }
@@ -59,7 +61,7 @@ public class ReservaService {
         boolean filtrarPorEstado = estado != null && !estado.isEmpty();
 
         if (filtrarPorFecha && filtrarPorEstado) {
-            return reservaRepository.findByFechaInicioBetweenAndEstadoContainingIgnoreCase(
+            return reservaRepository.findByFechaInicioBetweenAndEstadoContainingIgnoreCaseOrderByIdAsc(
                 LocalDateTime.parse(fechaInicio, formatter),
                 LocalDateTime.parse(fechaFin, formatter),
                 estado
@@ -71,7 +73,7 @@ public class ReservaService {
             );
         } else if (filtrarPorEstado) {
             System.out.println(estado);
-            return reservaRepository.findByEstado(estado);
+            return reservaRepository.findByEstadoOrderByIdAsc(estado);
         } else {
             return reservaRepository.findAll();
         } 
@@ -80,5 +82,12 @@ public class ReservaService {
     public Reserva obtenerReservaPorId(int id){
         return reservaRepository.findById(id);
 
+    }
+    public List<Reserva> listarPorUsuario(int id){
+        return reservaRepository.findByClienteId(id);
+    }
+
+    public List<Reserva> listarPorProveedor(int id){
+        return reservaRepository.findByProveedorId(id);
     }
 }

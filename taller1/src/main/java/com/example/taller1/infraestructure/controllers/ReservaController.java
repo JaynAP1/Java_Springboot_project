@@ -33,7 +33,7 @@ public class ReservaController {
         return reservaService.obtenerReservaPorId(id);
     }
 
-    @PostMapping("/")
+    @GetMapping("/")
     public List<Reserva> listaReservas(@RequestParam(required = false) String fechaInicio,
             @RequestParam(required = false) String fechaFin,
             @RequestParam(required = false) String estado) {
@@ -47,18 +47,30 @@ public class ReservaController {
     public Reserva crearReserva(@RequestParam Long usuarioId,
             @RequestParam Long herramientaId,
             @RequestParam String fechaInicio,
-            @RequestParam String fechaFin) {
+            @RequestParam String fechaFin,
+            @RequestParam Integer cantidad) {
         LocalDateTime fecha = LocalDateTime.parse(fechaInicio, DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss"));
         LocalDateTime fechaF = LocalDateTime.parse(fechaInicio, DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss"));
-        return reservaService.agregarReserva(usuarioId, herramientaId, fecha, fechaF);
+        return reservaService.agregarReserva(usuarioId, herramientaId, fecha, fechaF, cantidad);
     }
 
     @PutMapping("/actualizar")
     public Reserva actualizarReserva(@RequestParam Long reservaId,
             @RequestParam String fechaFin,
-            @RequestParam String estado) {
+            @RequestParam String estado,
+            @RequestParam Integer cantidad) {
         LocalDateTime fecha = LocalDateTime.parse(fechaFin, DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss"));
-        return reservaService.actualizarReserva(reservaId, fecha, estado);
+        return reservaService.actualizarReserva(reservaId, fecha, estado,cantidad);
+    }
+
+    @GetMapping("/usuarioId")
+    public List<Reserva> mostrarReservaPorUsuario(@RequestParam int id){
+        return reservaService.listarPorUsuario(id);
+    };
+
+        @GetMapping("/por_proveedor")
+    public List<Reserva> obtenerReservasPorProveedor(@RequestParam int id) {
+        return reservaService.listarPorProveedor(id);
     }
 
 }

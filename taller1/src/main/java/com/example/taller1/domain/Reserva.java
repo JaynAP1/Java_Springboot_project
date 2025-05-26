@@ -32,15 +32,17 @@ public class Reserva {
     private LocalDateTime fechaInicio = LocalDateTime.now();
     private LocalDateTime fechaFin = LocalDateTime.now();
     private String estado = "pendiente";
+    private Integer cantdiad;
     
     public Reserva(Long id, Usuario cliente, Herramienta herramienta, LocalDateTime fechaInicio, LocalDateTime fechaFin,
-            String estado) {
+            String estado, Integer cantdiad) {
         this.id = id;
         this.cliente = cliente;
         this.herramienta = herramienta;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
         this.estado = estado;
+        this.cantdiad = cantdiad;
     }
     public Reserva(){};
 }
